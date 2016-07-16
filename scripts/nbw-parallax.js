@@ -17,6 +17,7 @@
             var $thirdBG = $('#third');
             var trainers = $("#second .bg");
             var windowHeight = $window.height();
+            var resize_timer;
 
             $('#intro, #second, #third').bind('inview', function (event, visible) {
                 if (visible == true) {
@@ -43,6 +44,7 @@
             function Move() {
 
                 var pos = $window.scrollTop();
+
                 $('#pixels').html(pos);
                 //                console.log(pos);
 
@@ -71,12 +73,27 @@
             RepositionNav(); //Reposition the Navigation to center it in the window when the script loads
             //            Move();
 
-            $window.resize(function () {
-                Move();
-                RepositionNav();
-            });
+            window.addEventListener('resize', function () {
+                // update the boundaries
+                if (resize_timer !== false) {
+                    clearTimeout(resize_timer);
+                }
+                resize_timer = setTimeout(function () {
+
+                    console.log("resize");
+                    //     window.location.reload(false);
+                    Move();
+                    RepositionNav();
+
+                }, 200);
+            }, true);
 
             $window.bind('scroll', function () {
                 Move();
             });
         })
+
+        window.onload = function () {
+
+
+        }
